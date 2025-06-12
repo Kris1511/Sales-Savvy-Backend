@@ -9,5 +9,8 @@ public interface UsersService {
 	
 	// check existing user
 	UsersEntities getUser(String username);
+	
+	// check if user is exist
+	boolean validate(String username, String password);
 
 }

@@ -12,14 +12,21 @@ public class UsersServiceImplements implements UsersService {
 	@Autowired
 	UsersRepository repo;
 
-	@Override
+
 	public void signUp(UsersEntities user) {
 		repo.save(user);		
 	}
 
-	@Override
 	public UsersEntities getUser(String username) {
 		return repo.findByUsername(username);
+	}
+
+	public boolean validate(String username, String password) {
+		
+		UsersEntities user = getUser(username);
+		String dbPassword = user.getPassword();
+		
+		return (password.equals(dbPassword));
 	}
 
 }

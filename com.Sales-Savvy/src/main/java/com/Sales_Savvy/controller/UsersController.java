@@ -1,18 +1,18 @@
 package com.Sales_Savvy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.Sales_Savvy.entities.UserLoginData;
 import com.Sales_Savvy.entities.UsersEntities;
-import com.Sales_Savvy.services.UsersServiceImplements;
+import com.Sales_Savvy.services.UsersService;
 
+@CrossOrigin("*")
 @RestController
 public class UsersController {
 	
 	@Autowired
-	UsersServiceImplements service;
+	UsersService service;
 	
 	@PostMapping("/signUp")
 	public String signUp(@RequestBody UsersEntities user) {
@@ -32,5 +32,43 @@ public class UsersController {
 		return msg;
 		
 	}
+	
+	@PostMapping("/signIn")
+	public String signIn(@RequestBody UserLoginData user) {
+		String msg = "";
+		
+		String username = user.getUsername();
+		String password = user.getPassword();
+		
+		UsersEntities u = service.getUser(username);
+		
+		if (u == null) {			// means no user was found
+			msg = "User doesn't exist";
+		} else {
+			boolean status = service.validate(username, password);
+			
+			if (status == true) {
+				if (u.getRole().equals("admin")) {
+					msg = "admin";
+				} else {
+					msg = "customer";
+				}
+			}
+			else {
+				msg = "wrong password";
+			}
+		}
+		return msg;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+

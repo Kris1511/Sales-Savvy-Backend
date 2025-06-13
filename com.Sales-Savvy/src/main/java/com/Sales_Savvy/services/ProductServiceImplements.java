@@ -21,8 +21,8 @@ public class ProductServiceImplements implements ProductService {
 	}
 
 	public Product searchProduct(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return repo.findById(id).get();
 	}
 
 	public Product searchProduct(String name) {

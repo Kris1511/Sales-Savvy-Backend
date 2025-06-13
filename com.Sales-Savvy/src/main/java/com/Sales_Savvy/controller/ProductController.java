@@ -24,8 +24,8 @@ public class ProductController {
 		return service.deleteProduct(id);
 	}
 	
-	@PostMapping("/searchProduct")
-	public Product searchProduct(@RequestBody long id) {
+	@GetMapping("/searchProduct")
+	public Product searchProduct(@RequestParam long id) {
 		return service.searchProduct(id);
 	}
 

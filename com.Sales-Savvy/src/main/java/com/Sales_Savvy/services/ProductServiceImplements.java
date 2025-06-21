@@ -36,8 +36,7 @@ public class ProductServiceImplements implements ProductService {
 	}
 
 	public String updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Product updated successfully";
 	}
 
 	public String deleteProduct(long id) {

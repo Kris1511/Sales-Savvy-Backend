@@ -28,5 +28,10 @@ public class ProductController {
 	public Product searchProduct(@RequestParam long id) {
 		return service.searchProduct(id);
 	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(@RequestBody Product product) {
+		return service.updateProduct(product);
+	}
 
 }

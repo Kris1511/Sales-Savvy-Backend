@@ -26,16 +26,15 @@ public class ProductServiceImplements implements ProductService {
 	}
 
 	public Product searchProduct(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findByName(name);
 	}
 
 	public Product searchProductByCategory(String category) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findByCategory(category);
 	}
 
 	public String updateProduct(Product product) {
+		repo.save(product);
 		return "Product updated successfully";
 	}
 
@@ -44,8 +43,7 @@ public class ProductServiceImplements implements ProductService {
 	}
 
 	public List<Product> getAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findAll();
 	}
 	
 	

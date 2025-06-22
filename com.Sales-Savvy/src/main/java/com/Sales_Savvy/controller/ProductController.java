@@ -1,5 +1,7 @@
 package com.Sales_Savvy.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +35,18 @@ public class ProductController {
 	public String updateProduct(@RequestBody Product product) {
 		return service.updateProduct(product);
 	}
+	
+	@GetMapping("/getAllProduct")
+	public List<Product> getAllProduct() {
+		return service.getAllProduct();
+	}
 
 }
+
+
+
+
+
+
+
+

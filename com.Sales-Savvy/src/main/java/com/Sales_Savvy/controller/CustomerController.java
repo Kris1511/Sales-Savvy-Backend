@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Sales_Savvy.entities.Customer;
+import com.Sales_Savvy.entities.UsersEntities;
+import com.Sales_Savvy.repository.UsersRepository;
 import com.Sales_Savvy.services.CustomerService;
 
 @CrossOrigin("*")
@@ -22,14 +24,14 @@ public class CustomerController {
 	@Autowired
 	CustomerService service;
 	
-	@PostMapping("/signup")
-	public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
-		return ResponseEntity.ok(service.addCustomer(customer));
-	}
+	@Autowired
+	UsersRepository usersRepository;
+
 	
-	@GetMapping("/getAllCustomer")
-	public List<Customer> getAllCustomer() {
-		return service.listCustomer();
+	// GET only customers from UsersEntities table
+	@GetMapping("/getAllCustomer")	
+	public ResponseEntity<List<UsersEntities>> getAllCustomer() {
+		return ResponseEntity.ok(usersRepository.findByRole("customer"));
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.Sales_Savvy.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,22 @@ public class CustomerServiceImplements implements CustomerService {
 	@Autowired
 	CustomerRepository repo;
 	
-	public Customer addCustomer(Customer customer) {
-		return repo.save(customer);
+	public boolean updateCustomer(Long id, Customer updateCustomer) {
+		Optional<Customer> optional = repo.findById(id);
+		
+		if (optional.isPresent()) {
+			Customer existing = optional.get();
+			
+			existing.setName(updateCustomer.getName());
+			existing.setEmail(updateCustomer.getEmail());
+			existing.setPhone(updateCustomer.getPhone());
+			
+			repo.save(existing);
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 	public List<Customer> listCustomer() {

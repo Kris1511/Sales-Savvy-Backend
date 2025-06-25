@@ -7,7 +7,7 @@ import com.Sales_Savvy.entities.Customer;
 public interface CustomerService {
 	
 	// add customer
-	Customer addCustomer(Customer customer);
+	boolean updateCustomer(Long id, Customer updatedCustomer);
 	
 	// all customer
 	List<Customer> listCustomer();

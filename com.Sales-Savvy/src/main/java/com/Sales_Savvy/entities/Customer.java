@@ -12,20 +12,18 @@ public class Customer {
 	String name;
 	String email;
 	String phone;
-	String address;
 	
 	
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Customer(Long id, String name, String email, String phone, String address) {
+	public Customer(Long id, String name, String email, String phone) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.address = address;
 	}
 	public Long getId() {
 		return id;
@@ -51,16 +49,9 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", address="
-				+ address + "]";
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
 	}
 }

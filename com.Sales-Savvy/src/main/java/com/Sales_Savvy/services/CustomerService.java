@@ -2,7 +2,10 @@ package com.Sales_Savvy.services;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.Sales_Savvy.entities.Customer;
+import com.Sales_Savvy.entities.UsersEntities;
 
 public interface CustomerService {
 	
@@ -10,6 +13,9 @@ public interface CustomerService {
 	boolean updateCustomer(Long id, Customer updatedCustomer);
 	
 	// all customer
-	List<Customer> listCustomer();
+	List<UsersEntities> listCustomer();
+	
+	// delete customer
+	ResponseEntity<String> deleteCustomer(Long id);
 
 }

@@ -3,6 +3,7 @@ package com.Sales_Savvy.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
 	
 	@Id
@@ -12,19 +13,21 @@ public class Customer {
 	String name;
 	String email;
 	String phone;
-	
+	String role;
 	
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Customer(Long id, String name, String email, String phone) {
+	public Customer(Long id, String name, String email, String phone, String role) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
+		this.role = role;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -49,9 +52,16 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", role=" + role
+				+ "]";
 	}
+	
 }

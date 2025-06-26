@@ -35,7 +35,8 @@ public class CustomerController {
 	public List<UsersEntities> listCustomer() {
         return usersRepository.findByRole("customer");
     }
-
+	
+	// update the customer
 	@PutMapping("/updateCustomer/{id}")
 	public ResponseEntity<String> updateCustomer(@PathVariable Long id, @RequestBody UsersEntities updatedUser) {
 		return usersRepository.findById(id).map(existingUser -> {
@@ -51,6 +52,7 @@ public class CustomerController {
 		}).orElse(ResponseEntity.notFound().build());
 	}
 	
+	// delete the customer
 	@DeleteMapping("/deleteCustomer/{id}")
 	public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
 	    return service.deleteCustomer(id);

@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.Sales_Savvy.entities.CartData;
 import com.Sales_Savvy.entities.Product;
+import com.Sales_Savvy.entities.UsersEntities;
 import com.Sales_Savvy.services.ProductService;
+import com.Sales_Savvy.services.UsersService;
 
 @CrossOrigin("*")
 @RestController
@@ -14,6 +17,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService service;
+	
+	@Autowired
+	UsersService uService;
 	
 	@PostMapping("/addProduct")
 	public String addProduct(@RequestBody Product product) {
@@ -39,6 +45,20 @@ public class ProductController {
 	@GetMapping("/getAllProduct")
 	public List<Product> getAllProduct() {
 		return service.getAllProduct();
+	}
+	
+	@PostMapping("/addToCart")
+	public String addToCart(@RequestBody CartData data) {
+		
+		String username = data.getUsername();
+		
+		// returning username
+		UsersEntities user = uService.getUser(username);
+		
+		// returning product
+		Product p = service.searchProduct(data.getProductId());
+		return "cart added";
+		
 	}
 
 }

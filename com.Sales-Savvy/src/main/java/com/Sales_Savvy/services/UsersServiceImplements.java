@@ -3,6 +3,8 @@ package com.Sales_Savvy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Sales_Savvy.entities.Cart;
+import com.Sales_Savvy.entities.Product;
 import com.Sales_Savvy.entities.UsersEntities;
 import com.Sales_Savvy.repository.UsersRepository;
 
@@ -27,6 +29,12 @@ public class UsersServiceImplements implements UsersService {
 		String dbPassword = user.getPassword();
 		
 		return (password.equals(dbPassword));
+	}
+
+	@Override
+	public Cart updateCart(String username, Product product) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

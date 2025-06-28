@@ -1,13 +1,16 @@
 package com.Sales_Savvy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.Sales_Savvy.entities.Cart;
 import com.Sales_Savvy.entities.CartData;
 import com.Sales_Savvy.entities.Product;
 import com.Sales_Savvy.entities.UsersEntities;
+import com.Sales_Savvy.services.CartService;
 import com.Sales_Savvy.services.ProductService;
 import com.Sales_Savvy.services.UsersService;
 
@@ -20,6 +23,9 @@ public class ProductController {
 	
 	@Autowired
 	UsersService uService;
+	
+	@Autowired
+	CartService cService;
 	
 	@PostMapping("/addProduct")
 	public String addProduct(@RequestBody Product product) {
@@ -57,6 +63,27 @@ public class ProductController {
 		
 		// returning product
 		Product p = service.searchProduct(data.getProductId());
+		if (p == null) return "product not found";
+		
+		Cart c = null;
+		
+		// if the cart is null can add the product
+		if (user.getCart() == null) {
+			c = new Cart();
+			c.setUsers(user);
+			List<Product> listProduct = new ArrayList<>();
+			listProduct.add(p);
+		}
+		// if the cart already present add the same cart
+		else {
+			c = user.getCart();
+			c.getProductList().add(p);
+		}
+		
+		user.setCart(c);
+		
+		cService.addCart(c);
+		
 		return "cart added";
 		
 	}

@@ -1,5 +1,7 @@
 package com.Sales_Savvy.services;
 
+import com.Sales_Savvy.entities.Cart;
+import com.Sales_Savvy.entities.Product;
 import com.Sales_Savvy.entities.UsersEntities;
 
 public interface UsersService {
@@ -12,5 +14,8 @@ public interface UsersService {
 	
 	// check if user is exist
 	boolean validate(String username, String password);
+	
+	// update the user
+	Cart updateCart(String username, Product product);
 
 }

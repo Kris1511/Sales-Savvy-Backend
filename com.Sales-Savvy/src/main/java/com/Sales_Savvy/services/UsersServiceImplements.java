@@ -1,5 +1,7 @@
 package com.Sales_Savvy.services;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +34,35 @@ public class UsersServiceImplements implements UsersService {
 	}
 
 	@Override
-	public Cart updateCart(String username, Product product) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Cart updateCart(String username, Product product, int quantity) {
+	    UsersEntities user = repo.findByUsername(username);
+	    if (user == null) {
+	        throw new RuntimeException("User not found: " + username);
+	    }
 
+	    Cart cart = user.getCart(); // Check if user already has a cart
+
+	    if (cart == null) {
+	        // First time: create new cart
+	        cart = new Cart();
+	        cart.setUsers(user); // associate user with cart
+
+	        List<Product> productList = new ArrayList<>();
+	        for (int i = 0; i < quantity; i++) {
+	            productList.add(product); // add product multiple times based on quantity
+	        }
+
+	        cart.setProductList(productList); // set product list to cart
+	        user.setCart(cart);               // link cart to user
+	    } else {
+	        // Reuse existing cart
+	        List<Product> productList = cart.getProductList();
+	        for (int i = 0; i < quantity; i++) {
+	            productList.add(product); // add to same cart
+	        }
+	    }
+
+	    repo.save(user); // persist user and updated cart
+	    return cart;
+	}
 }

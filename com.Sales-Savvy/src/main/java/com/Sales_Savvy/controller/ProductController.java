@@ -54,39 +54,51 @@ public class ProductController {
 	}
 	
 	@PostMapping("/addToCart")
+//	public String addToCart(@RequestBody CartData data) {
+//		
+//		String username = data.getUsername();
+//		
+//		// returning username
+//		UsersEntities user = uService.getUser(username);
+//		
+//		// returning product
+//		Product p = service.searchProduct(data.getProductId());
+//		if (p == null) return "product not found";
+//		
+//		Cart c = null;
+//		
+//		// if the cart is null can add the product
+//		if (user.getCart() == null) {
+//			c = new Cart();
+//			c.setUsers(user);
+//			List<Product> listProduct = new ArrayList<>();
+//			listProduct.add(p);
+//		}
+//		// if the cart already present add the same cart
+//		else {
+//			c = user.getCart();
+//			c.getProductList().add(p);
+//		}
+//		
+//		user.setCart(c);
+//		
+//		cService.addCart(c);
+//		
+//		return "cart added";
+//		
+//	}
 	public String addToCart(@RequestBody CartData data) {
-		
 		String username = data.getUsername();
-		
-		// returning username
-		UsersEntities user = uService.getUser(username);
-		
-		// returning product
-		Product p = service.searchProduct(data.getProductId());
-		if (p == null) return "product not found";
-		
-		Cart c = null;
-		
-		// if the cart is null can add the product
-		if (user.getCart() == null) {
-			c = new Cart();
-			c.setUsers(user);
-			List<Product> listProduct = new ArrayList<>();
-			listProduct.add(p);
-		}
-		// if the cart already present add the same cart
-		else {
-			c = user.getCart();
-			c.getProductList().add(p);
-		}
-		
-		user.setCart(c);
-		
-		cService.addCart(c);
-		
-		return "cart added";
-		
-	}
+	    int quantity = data.getQuantity();
+
+	    Product product = service.searchProduct(data.getProductId());
+	    
+	    if (product == null) return "Product not found";
+
+	    uService.updateCart(username, product, quantity);
+
+	    return "Product added to cart successfully";
+    }
 
 }
 

@@ -16,6 +16,6 @@ public interface UsersService {
 	boolean validate(String username, String password);
 	
 	// update the user
-	Cart updateCart(String username, Product product);
+	Cart updateCart(String username, Product product, int quantity);
 
 }

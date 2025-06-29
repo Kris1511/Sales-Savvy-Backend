@@ -1,5 +1,6 @@
 package com.Sales_Savvy.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -25,18 +26,18 @@ public class Cart {
 	        orphanRemoval = true
 	    )							// one cart have the multiple product
 	    @JsonManagedReference       			
-	List<Product> productList;
+	List<CartItem> cartItems = new ArrayList<>();
 
 	public Cart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(Long id, UsersEntities users, List<Product> productList) {
+	public Cart(Long id, UsersEntities users, List<CartItem> cartItems) {
 		super();
 		this.id = id;
 		this.users = users;
-		this.productList = productList;
+		this.cartItems = cartItems;
 	}
 
 	public Long getId() {
@@ -55,17 +56,16 @@ public class Cart {
 		this.users = users;
 	}
 
-	public List<Product> getProductList() {
-		return productList;
+	public List<CartItem> getCartItems() {
+		return cartItems;
 	}
 
-	public void setProductList(List<Product> productList) {
-		this.productList = productList;
+	public void setCartItems(List<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", users=" + users + ", productList=" + productList + "]";
+		return "Cart [id=" + id + ", users=" + users + ", cartItems=" + cartItems + "]";
 	}
-
 }

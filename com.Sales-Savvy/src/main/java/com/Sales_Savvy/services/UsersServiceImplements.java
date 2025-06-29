@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Sales_Savvy.entities.Cart;
+import com.Sales_Savvy.entities.CartItem;
 import com.Sales_Savvy.entities.Product;
 import com.Sales_Savvy.entities.UsersEntities;
 import com.Sales_Savvy.repository.UsersRepository;
@@ -40,29 +41,40 @@ public class UsersServiceImplements implements UsersService {
 	        throw new RuntimeException("User not found: " + username);
 	    }
 
-	    Cart cart = user.getCart(); // Check if user already has a cart
+	    Cart cart = user.getCart();
 
+	    // Create new cart if none exists
 	    if (cart == null) {
-	        // First time: create new cart
 	        cart = new Cart();
-	        cart.setUsers(user); // associate user with cart
+	        cart.setUsers(user);
+	        user.setCart(cart); // associate cart with user
+	    }
 
-	        List<Product> productList = new ArrayList<>();
-	        for (int i = 0; i < quantity; i++) {
-	            productList.add(product); // add product multiple times based on quantity
-	        }
+	    List<CartItem> cartItems = cart.getCartItems();
+	    if (cartItems == null) cartItems = new ArrayList<>();
 
-	        cart.setProductList(productList); // set product list to cart
-	        user.setCart(cart);               // link cart to user
-	    } else {
-	        // Reuse existing cart
-	        List<Product> productList = cart.getProductList();
-	        for (int i = 0; i < quantity; i++) {
-	            productList.add(product); // add to same cart
+	    // Check if product already in cart
+	    boolean found = false;
+	    for (CartItem item : cartItems) {
+	        if (item.getProduct().getId().equals(product.getId())) {
+	            item.setQuantity(item.getQuantity() + quantity); // update quantity
+	            found = true;
+	            break;
 	        }
 	    }
 
-	    repo.save(user); // persist user and updated cart
+	    if (!found) {
+	        CartItem newItem = new CartItem();
+	        newItem.setCart(cart);
+	        newItem.setProduct(product);
+	        newItem.setQuantity(quantity);
+	        cartItems.add(newItem);
+	    }
+
+	    cart.setCartItems(cartItems);
+	    repo.save(user); // cascade saves cart and cartItems
+
 	    return cart;
 	}
+
 }
